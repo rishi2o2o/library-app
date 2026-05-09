@@ -8,6 +8,7 @@ CREATE TABLE users (
     id INT PRIMARY KEY AUTO_INCREMENT,
     email VARCHAR(255) UNIQUE NOT NULL,
     name VARCHAR(255) NOT NULL,
+    password_hash CHAR(60) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -37,9 +38,9 @@ CREATE TABLE loans (
 );
 
 -- Insert sample users
-INSERT INTO users (email, name) VALUES
-('mel@example.com', 'Mel'),
-('rob@example.com', 'Rob');
+INSERT INTO users (email, name, password_hash) VALUES
+('mel@example.com', 'Mel', '$2b$12$EL1ds7ikAQB0lTD/9e5jo.8devMdCjVmKYNV5yZdt0N20dohaJDM6'),
+('rob@example.com', 'Rob', '$2b$12$X5Ji3WzvMUlaIKONnSYRYOW66mLNhVgAxfyHZ7sOvVWUre72PBRhC');
 
 -- Insert sample books
 INSERT INTO books (isbn, title, author, genre, description, publication_year) VALUES
