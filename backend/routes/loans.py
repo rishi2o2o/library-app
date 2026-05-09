@@ -74,6 +74,7 @@ def create_loan(
         returned_at=loan.returned_at,
         is_active=loan.status == "active",
         book_title=book.title,
+        book_isbn=book.isbn,
     )
 
 
@@ -89,7 +90,7 @@ def get_my_loans(
         raise HTTPException(status_code=404, detail="User not found")
 
     rows = (
-        db.query(Loan, Book.title)
+        db.query(Loan, Book.title, Book.isbn)
         .join(Book, Book.id == Loan.book_id)
         .filter(Loan.user_id == user_id)
         .order_by(Loan.borrowed_at.desc())
@@ -106,8 +107,9 @@ def get_my_loans(
             returned_at=loan.returned_at,
             is_active=loan.status == "active",
             book_title=title,
+            book_isbn=isbn,
         )
-        for loan, title in rows
+        for loan, title, isbn in rows
     ]
 
 
@@ -153,5 +155,6 @@ def return_loan(
         returned_at=loan.returned_at,
         is_active=False,
         book_title=book.title,
+        book_isbn=book.isbn,
     )
 

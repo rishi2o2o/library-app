@@ -31,6 +31,7 @@ class LoanResponse(BaseModel):
     returned_at: Optional[datetime] = None
     is_active: bool
     book_title: Optional[str] = None
+    book_isbn: Optional[str] = None
 
     class Config:
         from_attributes = True

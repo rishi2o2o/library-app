@@ -10,6 +10,7 @@ import {
   Stack,
   Text,
 } from '@chakra-ui/react'
+import BookCover from '../components/BookCover.jsx'
 import { getMyLoans, returnLoan } from '../services/api.js'
 
 function formatDate(value) {
@@ -91,23 +92,29 @@ function HistoryPage() {
           >
             <Card.Header>
               <Stack direction="row" justify="space-between" align="center">
-                <Heading size="sm">{loan.book_title ?? `Book #${loan.book_id}`}</Heading>
+                <Heading size="md">{loan.book_title ?? `Book #${loan.book_id}`}</Heading>
                 <Badge colorPalette={loan.is_active ? 'blue' : 'gray'}>
                   {loan.is_active ? 'Active Loan' : 'Returned'}
                 </Badge>
               </Stack>
             </Card.Header>
             <Card.Body>
-              <Stack gap={1}>
-                <Text>
-                  <strong>Status:</strong> {loan.status}
-                </Text>
-                <Text>
-                  <strong>Borrowed At:</strong> {formatDate(loan.borrowed_at)}
-                </Text>
-                <Text>
-                  <strong>Returned At:</strong> {formatDate(loan.returned_at)}
-                </Text>
+              <Stack direction={{ base: 'column', md: 'row' }} gap={4}>
+                <BookCover
+                  isbn={loan.book_isbn}
+                  title={loan.book_title ?? `Book #${loan.book_id}`}
+                />
+                <Stack gap={1}>
+                  <Text>
+                    <strong>Status:</strong> {loan.status}
+                  </Text>
+                  <Text>
+                    <strong>Borrowed At:</strong> {formatDate(loan.borrowed_at)}
+                  </Text>
+                  <Text>
+                    <strong>Returned At:</strong> {formatDate(loan.returned_at)}
+                  </Text>
+                </Stack>
               </Stack>
             </Card.Body>
             {loan.is_active ? (
