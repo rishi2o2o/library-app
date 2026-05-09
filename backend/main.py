@@ -5,6 +5,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from backend.routes.books import router as books_router
+from backend.routes.auth import router as auth_router
 from backend.routes.loans import router as loans_router
 from backend.routes.users import router as users_router
 
@@ -23,6 +24,7 @@ app.add_middleware(
 )
 
 app.include_router(books_router)
+app.include_router(auth_router)
 app.include_router(loans_router)
 app.include_router(users_router)
 

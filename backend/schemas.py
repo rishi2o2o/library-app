@@ -22,6 +22,17 @@ class CreateLoanRequest(BaseModel):
     book_id: int
 
 
+class LoginRequest(BaseModel):
+    email: str
+    password: str
+
+
+class TokenResponse(BaseModel):
+    access_token: str
+    token_type: str
+    user_id: int
+
+
 class LoanResponse(BaseModel):
     id: int
     user_id: int

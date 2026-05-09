@@ -4,3 +4,11 @@ sqlalchemy
 pymysql
 python-dotenv
 
+# JWT creation and authentication
+python-jose[cryptography]
+
+# Password hash creation and authentication
+passlib[bcrypt]
+bcrypt<5  # for passlib compatibility
+
+

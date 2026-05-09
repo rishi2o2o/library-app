@@ -1,9 +1,10 @@
 from typing import List
 
-from fastapi import APIRouter, Depends, Header, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy import func
 from sqlalchemy.orm import Session
 
+from backend.auth import get_current_user_id
 from backend.database import get_db
 from backend.models import Book, Loan, User
 from backend.schemas import CreateLoanRequest, LoanResponse
@@ -11,20 +12,12 @@ from backend.schemas import CreateLoanRequest, LoanResponse
 router = APIRouter(prefix="/loans", tags=["loans"])
 
 
-def _require_user_id(x_user_id: int | None) -> int:
-    if x_user_id is None:
-        raise HTTPException(status_code=400, detail="X-User-Id header is required")
-    return x_user_id
-
-
 @router.post("", response_model=LoanResponse, status_code=status.HTTP_201_CREATED)
 def create_loan(
     payload: CreateLoanRequest,
-    x_user_id: int | None = Header(default=None, alias="X-User-Id"),
+    user_id: int = Depends(get_current_user_id),
     db: Session = Depends(get_db),
 ):
-    user_id = _require_user_id(x_user_id)
-
     user = db.query(User).filter(User.id == user_id).first()
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
@@ -80,11 +73,9 @@ def create_loan(
 
 @router.get("/me", response_model=List[LoanResponse])
 def get_my_loans(
-    x_user_id: int | None = Header(default=None, alias="X-User-Id"),
+    user_id: int = Depends(get_current_user_id),
     db: Session = Depends(get_db),
 ):
-    user_id = _require_user_id(x_user_id)
-
     user = db.query(User).filter(User.id == user_id).first()
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
@@ -116,11 +107,9 @@ def get_my_loans(
 @router.post("/{loan_id}/return", response_model=LoanResponse)
 def return_loan(
     loan_id: int,
-    x_user_id: int | None = Header(default=None, alias="X-User-Id"),
+    user_id: int = Depends(get_current_user_id),
     db: Session = Depends(get_db),
 ):
-    user_id = _require_user_id(x_user_id)
-
     loan = (
         db.query(Loan)
         .filter(Loan.id == loan_id, Loan.user_id == user_id)
