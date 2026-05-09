@@ -52,7 +52,7 @@ INSERT INTO books (isbn, title, author, genre, description, publication_year) VA
 ('9780061241895', 'Influence', 'Robert B. Cialdini', 'Psychology', 'A classic book about persuasion and social behavior.', 1984),
 ('9780812968255', 'Meditations', 'Marcus Aurelius', 'Philosophy', 'Stoic reflections on emotional control, discipline, and life.', 180),
 ('9780062316097', 'Sapiens', 'Yuval Noah Harari', 'History', 'A systems-level history of human civilization and evolution.', 2011),
-('9781439149952', 'The Lessons of History', 'Will Durant and Ariel Durant', 'History', 'A concise summary of recurring patterns throughout civilization.', 1968),
+('9781439149959', 'The Lessons of History', 'Will Durant and Ariel Durant', 'History', 'A concise summary of recurring patterns throughout civilization.', 1968),
 ('9781400063512', 'The Black Swan', 'Nassim Nicholas Taleb', 'Economics', 'A book about uncertainty, randomness, and rare impactful events.', 2007),
 ('9780735211292', 'Atomic Habits', 'James Clear', 'Self-Help', 'A guide to behavior design and building consistent habits.', 2018),
 ('9780132350884', 'Clean Code', 'Robert C. Martin', 'Software Engineering', 'Principles and practices for writing maintainable software.', 2008),
