@@ -11,6 +11,7 @@ import {
   Text,
 } from '@chakra-ui/react'
 import { createLoan, getAvailableBooks } from '../services/api.js'
+import BookCover from '../components/BookCover.jsx'
 
 function AvailableBooksPage() {
   const [books, setBooks] = useState([])
@@ -79,33 +80,42 @@ function AvailableBooksPage() {
         <Grid templateColumns={{ base: '1fr', md: 'repeat(2, 1fr)' }} gap={4}>
           {books.map((book) => (
             <Card.Root key={book.id}>
-              <Card.Header>
-                <Heading size="md">{book.title}</Heading>
-                <Text color="gray.600">{book.author}</Text>
-              </Card.Header>
               <Card.Body>
-                <Stack gap={2}>
-                  <Text>
-                    <strong>Genre:</strong> {book.genre ?? 'N/A'}
-                  </Text>
-                  <Text>
-                    <strong>Year:</strong> {book.publication_year ?? 'N/A'}
-                  </Text>
-                  <Text>
-                    <strong>ISBN:</strong> {book.isbn}
-                  </Text>
-                  <Text>{book.description ?? 'No description available.'}</Text>
+                <Stack
+                  direction={{ base: 'column', md: 'row' }}
+                  gap={4}
+                  align={{ base: 'center', md: 'flex-start' }}
+                >
+                  <BookCover isbn={book.isbn} title={book.title} />
+                  <Stack gap={3} flex="1" minW={0}>
+                    <Box>
+                      <Heading size="md">{book.title}</Heading>
+                      <Text color="gray.600">{book.author}</Text>
+                    </Box>
+                    <Stack gap={2}>
+                      <Text>
+                        <strong>Genre:</strong> {book.genre ?? 'N/A'}
+                      </Text>
+                      <Text>
+                        <strong>Year:</strong> {book.publication_year ?? 'N/A'}
+                      </Text>
+                      <Text>
+                        <strong>ISBN:</strong> {book.isbn}
+                      </Text>
+                      <Text>{book.description ?? 'No description available.'}</Text>
+                    </Stack>
+                    <Box pt={2}>
+                      <Button
+                        colorScheme="blue"
+                        onClick={() => handleBorrow(book.id)}
+                        loading={borrowingBookId === book.id}
+                      >
+                        Borrow Book
+                      </Button>
+                    </Box>
+                  </Stack>
                 </Stack>
               </Card.Body>
-              <Card.Footer>
-                <Button
-                  colorScheme="blue"
-                  onClick={() => handleBorrow(book.id)}
-                  loading={borrowingBookId === book.id}
-                >
-                  Borrow Book
-                </Button>
-              </Card.Footer>
             </Card.Root>
           ))}
         </Grid>
