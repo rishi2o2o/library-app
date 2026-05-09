@@ -114,20 +114,20 @@ function HistoryPage() {
                   <Text>
                     <strong>Returned At:</strong> {formatDate(loan.returned_at)}
                   </Text>
+                  {loan.is_active ? (
+                    <Box pt={6}>
+                      <Button
+                        colorScheme="green"
+                        onClick={() => handleReturn(loan.id)}
+                        loading={returningLoanId === loan.id}
+                      >
+                        Return Book
+                      </Button>
+                    </Box>
+                  ) : null}
                 </Stack>
               </Stack>
             </Card.Body>
-            {loan.is_active ? (
-              <Card.Footer>
-                <Button
-                  colorScheme="green"
-                  onClick={() => handleReturn(loan.id)}
-                  loading={returningLoanId === loan.id}
-                >
-                  Return Book
-                </Button>
-              </Card.Footer>
-            ) : null}
           </Card.Root>
         ))
       )}
